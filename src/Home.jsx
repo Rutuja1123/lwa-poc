@@ -46,7 +46,6 @@ function Home() {
           </div> 
             :
           <div className="text-center">
-            <h3>Please LogIn</h3>
             <br></br>
             <div>
             <Link to="/login"

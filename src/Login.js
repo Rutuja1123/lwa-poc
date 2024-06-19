@@ -8,6 +8,11 @@ function Login() {
     password: "",
   });
 
+
+  window.amazon.Login.setClientId('amzn1.application-oa2-client.b9bfa72ebbce4766807145912506899d');
+
+  const amazonLoginUrl = "http://localhost:5173/auth/amazon"
+
   const navigate = useNavigate();
   axios.defaults.withCredentials = true;
   let currentState = "";
@@ -23,6 +28,63 @@ function Login() {
       })
       .then((err) => console.log(err));
   };
+
+  const handleAmazonLogin = function() {
+    let options = {};
+    options.scope = 'profile';
+    options.pkce = true;
+    window.amazon.Login.authorize(options, function(response) {
+      try {
+        if (response.error) {
+          alert('Auth response error: ' + response.error);
+        } else {
+          // The user successfully logged in, get the access token
+          var accessToken = response.access_token;
+          // Use the access token to get the user's profile information
+          window.amazon.Login.retrieveProfile(function(userProfile) {
+            try {
+              // Handle the user's profile information
+              console.log(userProfile.name);
+              console.log(userProfile.email);
+            } catch (error) {
+              alert('Error retrieving profile: ' + error);
+            }
+          });
+        }
+      } catch (error) {
+        alert('Error authorizing: ' + error);
+      }
+    });
+  };
+
+//   const handleAmazonLogin = function() {
+//     setTimeout(window.doLogin, 30);
+//     return false;
+//  };
+//  window.doLogin = function() {
+//      let options = {};
+//      options.scope = 'profile';
+//      options.pkce = true;
+//      window.amazon.Login.authorize(options, function(response) {
+//          if ( response.error ) {
+//              alert('oauth error ' + response.error);
+//          return;
+//          }
+//          window.amazon.Login.retrieveToken(response.code, function(response) {
+//              if ( response.error ) {
+//                  alert('oauth error ' + response.error);
+//              return;
+//              }
+//              window.amazon.Login.retrieveProfile(response.access_token, function(response) {
+//                  alert('Hello, ' + response.profile.Name);
+//                  alert('Your e-mail address is ' + response.profile.PrimaryEmail);
+//                  alert('Your unique ID is ' + response.profile.CustomerId);
+//                  if ( window.console && window.console.log )
+//                     window.console.log(response);
+//              });
+//          });
+//      });
+// };
 
   return (
     <div className="flex items-center justify-center h-screen select-none">
@@ -61,11 +123,11 @@ function Login() {
           </div>
 
           <div className="mb-4">
-            <button
+            {/* <button
               className="w-full bg-green-500 text-white px-4 py-2 rounded-lg focus:outline-none"
               type="submit"
-            >
-              <a href id="LoginWithAmazon">
+            > */}
+              <a href="" id="LoginWithAmazon" onClick={handleAmazonLogin}>
                 <img
                   border="0"
                   alt="Login with Amazon"
@@ -74,7 +136,7 @@ function Login() {
                   height="32"
                 />
               </a>
-            </button>
+            {/* </button> */}
           </div>
 
           <div className="flex flex-row p-2">
