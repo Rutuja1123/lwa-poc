@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+// import cors from 'cors';
+// import express, { response } from 'express';
+
+// const app = express();
+// app.use(cors());
+
 
 function Login() {
   const [values, setValues] = useState({
@@ -29,32 +35,42 @@ function Login() {
       .then((err) => console.log(err));
   };
 
+  window.addEventListener('message', function(event) {
+    if (event.origin === 'https://na.account.amazon.com/') {
+      console.log('Received message:', event.data);
+      // Perform any necessary actions with the received message
+    }
+  });
+
   const handleAmazonLogin = function() {
     let options = {};
     options.scope = 'profile';
     options.pkce = true;
-    window.amazon.Login.authorize(options, function(response) {
-      try {
-        if (response.error) {
-          alert('Auth response error: ' + response.error);
-        } else {
-          // The user successfully logged in, get the access token
-          var accessToken = response.access_token;
-          // Use the access token to get the user's profile information
-          window.amazon.Login.retrieveProfile(function(userProfile) {
-            try {
-              // Handle the user's profile information
-              console.log(userProfile.name);
-              console.log(userProfile.email);
-            } catch (error) {
-              alert('Error retrieving profile: ' + error);
-            }
-          });
-        }
-      } catch (error) {
-        alert('Error authorizing: ' + error);
-      }
-    });
+    window.amazon.Login.authorize(options, "http://localhost:5173/"
+    //   function(response) {
+    //   try {
+    //     if (response.error) {
+    //       alert('Auth response error: ' + response.error);
+    //     } else {
+    //       // The user successfully logged in, get the access token
+    //       var accessToken = response.access_token;
+    //       // Use the access token to get the user's profile information
+    //       window.amazon.Login.retrieveProfile(function(userProfile) {
+    //         try {
+    //           // Handle the user's profile information
+    //           console.log(userProfile.name);
+    //           console.log(userProfile.email);
+    //         } catch (error) {
+    //           alert('Error retrieving profile: ' + error);
+    //         }
+    //       });
+    //     }
+    //   } catch (error) {
+    //     alert('Error authorizing: ' + error);
+    //   }
+    // }
+  );
+  return false;
   };
 
 //   const handleAmazonLogin = function() {

@@ -15,34 +15,35 @@ const app = express();
 //   })
 
 app.use(express.json());
+app.use(cors());
 app.use(cors({
-    // origin: ['http://54.227.1.200/'],
-    origin: ['http://localhost:5173'],
+    origin: ['https://Rutuja1123.github.io/lwa-poc'],
+    // origin: ['http://localhost:5173'],
     methods: ['GET', 'POST'],
     credentials: true
 }));
-app.use(cors({
-    // origin: ['http://54.227.1.200/'],
-    origin: ['https://na.account.amazon.com'],
-    methods: ['GET', 'POST'],
-    credentials: true
-}));
+// app.use(cors({
+//     // origin: ['http://54.227.1.200/'],
+//     origin: ['https://na.account.amazon.com'],
+//     methods: ['GET', 'POST'],
+//     credentials: true
+// }));
 app.use(cookieParser());
   
 
-const db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'lwa-poc'
-})
-
 // const db = mysql.createConnection({
-//     host: 'sql12.freesqldatabase.com',
-//     user: 'sql12714391',
-//     password: 'QCJ6tn4Rrp',
-//     database: 'sql12714391'
+//     host: 'localhost',
+//     user: 'root',
+//     password: '',
+//     database: 'lwa-poc'
 // })
+
+const db = mysql.createConnection({
+    host: 'sql12.freesqldatabase.com',
+    user: 'sql12714391',
+    password: 'QCJ6tn4Rrp',
+    database: 'sql12714391'
+})
 
 const verifyUser = (req, res, next) => {
     const token = req.cookies.token;
