@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/lwa-poc/static/css/main.22484fc4.css",
+    "main.js": "/lwa-poc/static/js/main.c02a883e.js",
+    "index.html": "/lwa-poc/index.html",
+    "main.22484fc4.css.map": "/lwa-poc/static/css/main.22484fc4.css.map",
+    "main.c02a883e.js.map": "/lwa-poc/static/js/main.c02a883e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.22484fc4.css",
+    "static/js/main.c02a883e.js"
+  ]
+}
